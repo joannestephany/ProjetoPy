@@ -32,7 +32,7 @@ def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos i
     print("fim")  # só para ter alguma coisa
 
 def controleCard(card): # para limitar
-    if card > 0 & card <= 2:
+    if card > 0 and card <= 2:
         openCardapio(card)
     else:
         print ('Escolha inválida')
