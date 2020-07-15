@@ -1,1 +1,57 @@
+print('BEM VINDO À SORVEETERIA PY \n')
 
+def escolhaCardapio():
+    card = 1
+    while card != 0:
+        print("ESCOLHA SEU CARDÁPIO\n")
+        print(" > Digite 1 para abrir o caradápio de Sorvete")
+        print(" > Digite 2 para abrir o cardápio de Açai")
+        print(" > Digite 0 para encerrar pedido")
+
+        card = int(input(" Escolha: "))
+        controleCard(card) if card != 0 else ''
+    if card == 0:
+        print("FIM DO PEDIDO!!!")
+
+def openCardapio(card):
+    if card == 1:
+        cardSorvete()
+    elif card == 2:
+        cardAcai()
+
+
+def cardSorvete():
+    print('Sorvete de chocolate')  # só para ter alguma cois
+
+
+def cardAcai():
+    print('Açai com banana')  # só para ter alguma coisa
+
+
+def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
+    print("fim")  # só para ter alguma coisa
+
+def controleCard(card): # para limitar
+    if card > 0 & card <= 2:
+        openCardapio(card)
+    else:
+        print ('Escolha inválida')
+
+def tamanhosPreco(): 
+    print('ESCOLHA UM DOS TAMANHOS DISPONIVEIS')
+    print('PEQUENO = 200ml = 4reais \n2- MEDIO = 400ml = 7reais\n3- GRANDE = 600ml = 10reais\n')
+    tam = str(input('Escolha o tamanho: (pequeno/medio/grande)')).upper
+
+    if tam =='PEQUENO': #tenho crteza que nao se compara assim
+        preco = 4 
+    elif tam == 'MEDIO':
+        preco = 7
+    elif tam == 'GRANDE':
+        preco = 10
+        
+
+          
+escolhaCardapio()
+#card = escolhaCardapio()
+#openCardapio() #tá dando erro aqui
+#tem que chamar todas as outras funções
