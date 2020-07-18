@@ -21,12 +21,20 @@ def openCardapio(card):
 
 
 def cardSorvete():
-    print('Sorvete de chocolate')  # só para ter alguma cois
-
+    sabores = list()
+    sabores.append('Chocolate')
+    sabores.append('Baunilha')
+    sabores.append('Flocos')
+    sabores.append('Morango')
+    return sabores
 
 def cardAcai():
-    print('Açai com banana')  # só para ter alguma coisa
-
+    complementos = list()
+    complementos.append('Castanha')
+    complementos.append('Amendoim')
+    complementos.append('Banana')
+    complementos.append('Achocolatado')
+    return complementos
 
 def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
     print("fim")  # só para ter alguma coisa
@@ -38,16 +46,21 @@ def controleCard(card): # para limitar
         print ('Escolha inválida')
 
 def tamanhosPreco(): 
-    print('ESCOLHA UM DOS TAMANHOS DISPONIVEIS')
-    print('PEQUENO = 200ml = 4reais \n2- MEDIO = 400ml = 7reais\n3- GRANDE = 600ml = 10reais\n')
-    tam = str(input('Escolha o tamanho: (pequeno/medio/grande)')).upper
-
-    if tam =='PEQUENO': #tenho crteza que nao se compara assim
+    print('DIGITE O NÚMERO CORRESPONDENTE: ')
+    print('1 - PEQUENO = 200ml = 4reais ')
+    print('2 - MEDIO = 400ml = 7reais')
+    print('3 - GRANDE = 600ml = 10reais')
+    
+    tam = int(input('Escolha o tamanho: (pequeno - 1 /medio - 2/grande - 3)'))
+    preco = 0
+    if tam == 1: 
         preco = 4 
-    elif tam == 'MEDIO':
+    elif tam == 2:
         preco = 7
-    elif tam == 'GRANDE':
+    elif tam == 3:
         preco = 10
+    else:
+        print('Opção inválida')
         
 
           
