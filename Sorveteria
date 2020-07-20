@@ -1,23 +1,29 @@
 print('BEM VINDO À SORVEETERIA PY \n')
 
+
 def escolhaCardapio():
-    card = 1
-    while card != 0:
+    global card
+    card = -1
+    while card < 0 or card > 2:
         print("ESCOLHA SEU CARDÁPIO\n")
         print(" > Digite 1 para abrir o caradápio de Sorvete")
         print(" > Digite 2 para abrir o cardápio de Açai")
         print(" > Digite 0 para encerrar pedido")
 
         card = int(input(" Escolha: "))
-        controleCard(card) if card != 0 else ''
-    if card == 0:
-        print("FIM DO PEDIDO!!!")
+        if card == 1 or card == 2:
+            controleCard(card)
+        elif card == 0:
+            print("FIM DO PEDIDO!!!")
+        else:
+            break
+
 
 def openCardapio(card):
     if card == 1:
         cardSorvete()
     elif card == 2:
-        cardAcai()
+        tamanhosPreco()
 
 
 def cardSorvete():
@@ -26,45 +32,51 @@ def cardSorvete():
     sabores.append('Baunilha')
     sabores.append('Flocos')
     sabores.append('Morango')
-    return sabores
+    print("Nossos sabores são: {}".format(sabores))
 
-def cardAcai():
+
+def cardAcai(tam):
     complementos = list()
     complementos.append('Castanha')
     complementos.append('Amendoim')
     complementos.append('Banana')
     complementos.append('Achocolatado')
-    return complementos
+    print("Nossos complementos são: {}".format(complementos))
+    while tam != -2:
+        print("Você tem direito a escolher {} deles.".format(tam + 2))
+        # input() aqui vai ser a escolha dos complementos
+        tam = tam - 1
+
 
 def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
     print("fim")  # só para ter alguma coisa
 
-def controleCard(card): # para limitar
+
+def controleCard(card):  # para limitar
     if card > 0 and card <= 2:
         openCardapio(card)
     else:
-        print ('Escolha inválida')
+        print('Escolha inválida')
 
-def tamanhosPreco(): 
-    print('DIGITE O NÚMERO CORRESPONDENTE: ')
-    print('1 - PEQUENO = 200ml = 4reais ')
-    print('2 - MEDIO = 400ml = 7reais')
-    print('3 - GRANDE = 600ml = 10reais')
-    
-    tam = int(input('Escolha o tamanho: (pequeno - 1 /medio - 2/grande - 3)'))
+
+def tamanhosPreco():
+    print('1 - PEQUENO = 3 Complementos = 200ml = 4R$ ')
+    print('2 - MEDIO = 4 Complementos = 400ml = 7R$')
+    print('3 - GRANDE = 5 Complementos = 600ml = 10R$')
+    tam = int(input('DIGITE O NÚMERO CORRESPONDENTE: '))
+    cardAcai(tam)
+
     preco = 0
-    if tam == 1: 
-        preco = 4 
+    if tam == 1:
+        preco = 4
     elif tam == 2:
         preco = 7
     elif tam == 3:
         preco = 10
     else:
         print('Opção inválida')
-        
 
-          
+
 escolhaCardapio()
-#card = escolhaCardapio()
-#openCardapio() #tá dando erro aqui
-#tem que chamar todas as outras funções
+# card = escolhaCardapio()
+# tem que chamar todas as outras funções
