@@ -1,5 +1,5 @@
 import os
-
+#teste 1 para branch
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
     global card
