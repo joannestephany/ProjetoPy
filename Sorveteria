@@ -38,6 +38,12 @@ def cardAcai(preco):         #Após escolher o sabor o pedido do usuário vai pa
     complementos.append('Banana')
     complementos.append('Achocolatado')
     return complementos
+    seusComplementos = []
+    while len(seusComplementos)< tam+2:
+        print("Escolha seu {}º complemento.".format(len(seusComplementos)+1))
+        nomeDoComp = input()
+        seusComplementos.append(nomeDoComp)
+    print("Seus complementos foram: {}".format(seusComplementos))
 
 def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
     print("fim")  # só para ter alguma coisa
@@ -79,74 +85,5 @@ escolhaCardapio()
 #card = escolhaCardapio()
 #openCardapio() #tá dando erro aqui
 #tem que chamar todas as outras funções
-Saída da execução a partir de 17 de jul. de 2020 22:26
-	Stream
-		BEM VINDO À SORVEETERIA PY 
-		
-		ESCOLHA SEU CARDÁPIO
-		
-		 > Digite 1 para abrir o caradápio de Sorvete
-		 > Digite 2 para abrir o cardápio de Açai
-		 > Digite 0 Finalizar pedido.
-		 Escolha: 1
-		DIGITE O NÚMERO CORRESPONDENTE: 
-		1 - PEQUENO = 200ml = 4,00 R$ 
-		2 - MEDIO = 400ml = 7,00 R$
-		3 - GRANDE = 600ml = 10,00 R$
-		0 - VOLTAR
-		Escolha o tamanho: 0
-		ESCOLHA SEU CARDÁPIO
-		
-		 > Digite 1 para abrir o caradápio de Sorvete
-		 > Digite 2 para abrir o cardápio de Açai
-		 > Digite 0 Finalizar pedido.
-		 Escolha: 0
-		FIM DO PEDIDO!!!
-
-Célula de código <crM3H9bxFhzg>
-#%% [code]
-def validarCPF(cpf):
-    if cpf.count(cpf[1]) == 11:
-        print('CPF inválido, confira os dados.')
-    elif len(cpf) != 11:
-        print('CPF inválido, confira os dados.')  
-    else:    
-        soma1 = 0
-        cont = 10
-        for i in range(2, 11):
-            soma1 += (int(cpf[i - 2]) * cont)
-            cont -= 1
-
-        resto = (soma1 * 10) % 11
-        if resto != 10 and resto != int(cpf[-2]):
-            print('CPF inválido, confira os dados.')
-        else:
-            soma2 = 0
-            cont = 11
-            for x in range(2, 12):
-                soma2 += (int(cpf[x - 2]) * cont)
-                cont -= 1
-
-            resto = (soma2 * 10) % 11
-            if resto != int(cpf[-1]):
-                print('CPF inválido, confira os dados.')
-            else:
-                print('CPF Válido!')
-                return True
-
-
-def menuCPF():
-    flag = False
-    while flag != True:
-        opt = input(f'Digite o cpf ou Apenas 0 para cancelar: ')
-        if int(opt) != 0:
-            flag = validarCPF(opt)
-        else:
-            print('Operação cancelada.')
-            flag = True
-
-
-menuCPF()
-
 
 
