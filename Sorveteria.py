@@ -96,7 +96,7 @@ PARAMOS NESSA FUNÇAO
 print('BEM VINDO À SORVEETERIA PY \n')
 nomeCliente=input("Digite seu nome para começarmos: ")
 escolhaCardapio()
-print(nommeCliente)
+print(nomeCliente)
 '''
 print(preco) vai mostrar o valor que a pessoa ter que pagar
 print(seusComplementos) vai mostrar os complementos  escolhidos
