@@ -1,5 +1,4 @@
 import os
-#teste 1 para branch
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
     global card
@@ -12,12 +11,11 @@ def escolhaCardapio():
 
         card = int(input(" Escolha: "))
         if card == 1:
-            tamanhosPreco(card)
+            return 1
         elif card == 2:
-            tamanhosPreco(card)
+            return 2
         elif card == 0:
             print("FIM DO PEDIDO!!!")  # tem que chamar a função aqui que calcula tudo
-            break
         else:
             print('Valor inválido, escolha outra opção.')
 
@@ -89,25 +87,6 @@ def tamanhosPreco(opt):
     else:
         cardAcai(tam)
 
-
-'''
-PARAMOS NESSA FUNÇAO
-'''
-print('BEM VINDO À SORVEETERIA PY \n')
-nomeCliente=input("Digite seu nome para começarmos: ")
-escolhaCardapio()
-print(nomeCliente)
-'''
-print(preco) vai mostrar o valor que a pessoa ter que pagar
-print(seusComplementos) vai mostrar os complementos  escolhidos
-print(seusSabores) vai mostrar os sabores escolihods
-!!!falta colocar condição caso a pessoa digite um sabor que não tenha (usando string).requisito
-!!!falta repetir o programa caso a pessoa queira pedir outro produto e acumular na variavel preco
-!!!falta usar valores boleanos(true/false).requisito
-!!!condicao aninhada/encadeada.requisito
-'''
-# card = escolhaCardapio()
-
 def validarCPF(cpf):
     if cpf.count(cpf[1]) == 11:
         print('CPF inválido, confira os dados.')
@@ -149,4 +128,27 @@ def menuCPF():
             flag = True
 
 
-menuCPF()
+
+
+'''
+PARAMOS NESSA FUNÇAO
+'''
+print('BEM VINDO À SORVEETERIA PY \n')
+nomeCliente=input("Digite seu nome para começarmos: ")
+opt = escolhaCardapio()
+if opt == 1:
+    tamanhosPreco(opt)
+elif opt == 2:
+    tamanhosPreco(opt)
+print(nomeCliente)
+'''
+print(preco) vai mostrar o valor que a pessoa ter que pagar
+print(seusComplementos) vai mostrar os complementos  escolhidos
+print(seusSabores) vai mostrar os sabores escolihods
+!!!falta colocar condição caso a pessoa digite um sabor que não tenha (usando string).requisito
+!!!falta repetir o programa caso a pessoa queira pedir outro produto e acumular na variavel preco
+!!!falta usar valores boleanos(true/false).requisito
+!!!condicao aninhada/encadeada.requisito
+'''
+# card = escolhaCardapio()
+
