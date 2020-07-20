@@ -23,18 +23,21 @@ def escolhaCardapio():
             print('Valor inválido, escolha outra opção.')
 
 
-#                FUNÇÃO QUE MOSTRA MENU SORVETE - INCOMPLETA
-def cardSorvete(preco):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
+def cardSorvete(tam):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
     sabores = list()
-    sabores.append('1 - Chocolate')
-    sabores.append('2 - Baunilha')
-    sabores.append('3 - Flocos')
-    sabores.append('4 - Morango')
-    print(sabores)
-    return sabores
+    sabores.append('Chocolate')
+    sabores.append('Baunilha')
+    sabores.append('Flocos')
+    sabores.append('Morango')
+    print("Nossos sabores são: {}".format(sabores))
+    seusSabores = []
+    while len(seusSabores) < tam:
+        print("Escolha seu {}º sabor.".format(len(seusSabores) + 1))
+        nomeDoSabor = input()
+        seusSabores.append(nomeDoSabor)
+    print("Seus sabores foram: {}".format(seusSabores))
 
 
-#               FUNÇÃO QUE MOSTRA MENU ACAI - INCOMPLETA
 def cardAcai(tam):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
     complementos = list()
     complementos.append('Castanha')
@@ -43,8 +46,9 @@ def cardAcai(tam):  # Após escolher o sabor o pedido do usuário vai par o "car
     complementos.append('Achocolatado')
     print("Nossos complementos são: {}".format(complementos))
     seusComplementos = []
-    print(tam)
-    while len(seusComplementos) < tam+2:
+    print("Você tem direito a {} complemento(s)".format(tam))
+    while len(seusComplementos) < tam:
+
         print("Escolha seu {}º complemento.".format(len(seusComplementos) + 1))
         nomeDoComp = input()
         seusComplementos.append(nomeDoComp)
@@ -63,6 +67,7 @@ def tamanhosPreco(opt):
     print('3 - GRANDE = 600ml = 10,00 R$')
     print('0 - VOLTAR')
     condicao = 1
+    global preco
     preco = 0
     while condicao != -1:
         tam = int(input('Escolha o tamanho: '))
@@ -91,6 +96,56 @@ PARAMOS NESSA FUNÇAO
 '''
 print('BEM VINDO À SORVEETERIA PY \n')
 escolhaCardapio()
-nomeCliente=input('Digite o seu nome: ')
+'''
+print(preco) vai mostrar o valor que a pessoa ter que pagar
+print(seusComplementos) vai mostrar os complementos  escolhidos
+print(seusSabores) vai mostrar os sabores escolihods
+!!!falta colocar condição caso a pessoa digite um sabor que não tenha (usando string).requisito
+!!!falta repetir o programa caso a pessoa queira pedir outro produto e acumular na variavel preco
+!!!falta usar valores boleanos(true/false).requisito
+!!!condicao aninhada/encadeada.requisito
+'''
 # card = escolhaCardapio()
 
+def validarCPF(cpf):
+    if cpf.count(cpf[1]) == 11:
+        print('CPF inválido, confira os dados.')
+    elif len(cpf) != 11:
+        print('CPF inválido, confira os dados.')
+    else:
+        soma1 = 0
+        cont = 10
+        for i in range(2, 11):
+            soma1 += (int(cpf[i - 2]) * cont)
+            cont -= 1
+
+        resto = (soma1 * 10) % 11
+        if resto != 10 and resto != int(cpf[-2]):
+            print('CPF inválido, confira os dados.')
+        else:
+            soma2 = 0
+            cont = 11
+            for x in range(2, 12):
+                soma2 += (int(cpf[x - 2]) * cont)
+                cont -= 1
+
+            resto = (soma2 * 10) % 11
+            if resto != int(cpf[-1]):
+                print('CPF inválido, confira os dados.')
+            else:
+                print('CPF Válido!')
+                return True
+
+
+def menuCPF():
+    flag = False
+    while flag != True:
+        opt = input(f'Digite o cpf ou Apenas 0 para cancelar: ')
+        if int(opt) != 0:
+            flag = validarCPF(opt)
+        else:
+            print('Operação cancelada.')
+            flag = True
+
+
+menuCPF()
