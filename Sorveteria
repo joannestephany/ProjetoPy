@@ -42,10 +42,12 @@ def cardAcai(tam):
     complementos.append('Banana')
     complementos.append('Achocolatado')
     print("Nossos complementos são: {}".format(complementos))
-    while tam != -2:
-        print("Você tem direito a escolher {} deles.".format(tam + 2))
-        # input() aqui vai ser a escolha dos complementos
-        tam = tam - 1
+    seusComplementos = []
+    while len(seusComplementos)< tam+2:
+        print("Escolha seu {}º complemento.".format(len(seusComplementos)+1))
+        nomeDoComp = input()
+        seusComplementos.append(nomeDoComp)
+    print("Seus complementos foram: {}".format(seusComplementos))
 
 
 def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
@@ -78,5 +80,3 @@ def tamanhosPreco():
 
 
 escolhaCardapio()
-# card = escolhaCardapio()
-# tem que chamar todas as outras funções
