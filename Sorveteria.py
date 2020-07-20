@@ -1,6 +1,5 @@
 import os
 
-
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
     global card
@@ -95,7 +94,9 @@ def tamanhosPreco(opt):
 PARAMOS NESSA FUNÇAO
 '''
 print('BEM VINDO À SORVEETERIA PY \n')
+nomeCliente=input("Digite seu nome para começarmos: ")
 escolhaCardapio()
+print(nommeCliente)
 '''
 print(preco) vai mostrar o valor que a pessoa ter que pagar
 print(seusComplementos) vai mostrar os complementos  escolhidos
