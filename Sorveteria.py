@@ -1,9 +1,10 @@
 import os
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
-    global card
+    #global card
     card = 1
     while card != 0:
+        os.system('cls')
         print("ESCOLHA SEU CARDÁPIO\n")
         print(" > Digite 1 para abrir o caradápio de Sorvete")
         print(" > Digite 2 para abrir o cardápio de Açai")
@@ -11,13 +12,47 @@ def escolhaCardapio():
 
         card = int(input(" Escolha: "))
         if card == 1:
-            return 1
+            return card
         elif card == 2:
-            return 2
+            return card
         elif card == 0:
             print("FIM DO PEDIDO!!!")  # tem que chamar a função aqui que calcula tudo
+            return card
         else:
             print('Valor inválido, escolha outra opção.')
+
+
+#                   FUNÇAO QUE ESCOLHE O TAMANHO DO SORVETE/ACAI (CHAMA FUNCAO MENU SORVETE/ACAI)
+def tamanhosPreco(opt):
+    os.system('cls')
+    print('DIGITE O NÚMERO CORRESPONDENTE: ')
+    print('1 - PEQUENO = 200ml = 4,00 R$ ')
+    print('2 - MEDIO = 400ml = 7,00 R$')
+    print('3 - GRANDE = 600ml = 10,00 R$')
+    print('0 - VOLTAR')
+    condicao = 1
+    global preco
+    preco = 0
+    while condicao != -1:
+        tam = int(input('Escolha o tamanho: '))
+        if tam == 1 or tam == 2 or tam == 3 or tam == 0:
+            if tam == 1:
+                preco = 4
+                condicao = -1
+            elif tam == 2:
+                preco = 7
+                condicao = -1
+            elif tam == 3:
+                preco = 10
+                condicao = -1
+            elif tam == 0:
+               return 3
+        else:
+            print('Opção inválida.')
+    if opt == 1:
+        cardSorvete(tam)
+    else:
+        cardAcai(tam)
 
 
 def cardSorvete(tam):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
@@ -55,37 +90,6 @@ def cardAcai(tam):  # Após escolher o sabor o pedido do usuário vai par o "car
 def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
     print("fim")  # só para ter alguma coisa
 
-
-#                   FUNÇAO QUE ESCOLHE O TAMANHO DO SORVETE/ACAI (CHAMA FUNCAO MENU SORVETE/ACAI)
-def tamanhosPreco(opt):
-    print('DIGITE O NÚMERO CORRESPONDENTE: ')
-    print('1 - PEQUENO = 200ml = 4,00 R$ ')
-    print('2 - MEDIO = 400ml = 7,00 R$')
-    print('3 - GRANDE = 600ml = 10,00 R$')
-    print('0 - VOLTAR')
-    condicao = 1
-    global preco
-    preco = 0
-    while condicao != -1:
-        tam = int(input('Escolha o tamanho: '))
-        if tam == 1 or tam == 2 or tam == 3 or tam == 0:
-            if tam == 1:
-                preco = 4
-                condicao = -1
-            elif tam == 2:
-                preco = 7
-                condicao = -1
-            elif tam == 3:
-                preco = 10
-                condicao = -1
-            elif tam == 0:
-                return
-            else:
-                print('Opção inválida.')
-    if opt == 1:
-        cardSorvete(tam)
-    else:
-        cardAcai(tam)
 
 def validarCPF(cpf):
     if cpf.count(cpf[1]) == 11:
@@ -135,11 +139,18 @@ PARAMOS NESSA FUNÇAO
 '''
 print('BEM VINDO À SORVEETERIA PY \n')
 nomeCliente=input("Digite seu nome para começarmos: ")
-opt = escolhaCardapio()
-if opt == 1:
-    tamanhosPreco(opt)
-elif opt == 2:
-    tamanhosPreco(opt)
+pedido = 1
+while pedido != 0:
+    pedido = escolhaCardapio()
+    if pedido == 1:
+        tamanhosPreco(pedido)
+    elif pedido == 2:
+        tamanhosPreco(pedido)
+    elif pedido == 0:
+        #Chamar função nota
+        None
+    else:
+        None
 print(nomeCliente)
 '''
 print(preco) vai mostrar o valor que a pessoa ter que pagar
