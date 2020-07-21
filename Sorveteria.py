@@ -1,4 +1,5 @@
 import os
+from time import sleep
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
     #global card
@@ -9,7 +10,7 @@ def escolhaCardapio():
         print(" > Digite 1 para abrir o caradápio de Sorvete")
         print(" > Digite 2 para abrir o cardápio de Açai")
         print(" > Digite 0 Finalizar pedido.")
-
+ 
         card = int(input(" Escolha: "))
         if card == 1:
             return card
@@ -31,22 +32,13 @@ def tamanhosPreco():
     print('3 - GRANDE 600ml: 10,00 R$')
     print('0 - VOLTAR')
     condicao = 1
-    preco = 0.0
     while condicao != 0:
         tam = int(input('Escolha o tamanho: '))
-        if tam == 1:
-            preco = 4
-            return preco
-        elif tam == 2:
-            preco = 7
-            return preco
-        elif tam == 3:
-            preco = 10
-            return preco
-        elif tam == 0:
-            return 0
-        else:
+        if tam != 1 and tam != 2 and tam != 3 and tam != 0:
             print('Opção inválida.')
+        else:
+            return tam
+            
 
 
 
@@ -56,33 +48,69 @@ def cardSorvete(tam):  # Após escolher o sabor o pedido do usuário vai par o "
     for i in range(len(sabor)):
         print(f'{i + 1} - {sabor[i]}')
     seusSabores = []
+    if tam == 1:
+        opcao = int(input('Escolha seu sabor: '))
+        if opcao != 1 and opcao != 2 and opcao != 3 and opcao != 4:
+            print('Opção inválida')
+        else:
+            seusSabores.append(sabor[opcao - 1])
+            print(seusSabores)
+            sleep(2)
+    elif tam == 2:
+        for i in range(2):
+            opcao = int(input(f'Escolha o {i + 1}º sabor: '))
+            seusSabores.append(opcao - 1)
+            print(seusSabores)
+    else:
+        for i in range(3):
+            opcao = int(input(f'Escolha o {i + 1}º sabor: '))
+            seusSabores.append(opcao - 1)
+            print(seusSabores)
+    return seusSabores
+   
+   
+    '''
     while len(seusSabores) < tam:
-        print("Escolha seu {}º sabor.".format(len(seusSabores) + 1))
+        print("Escolha seu {}º sabor.:(escreva) ".format(len(seusSabores) + 1))
         nomeDoSabor = input()
         seusSabores.append(nomeDoSabor)
     print("Seus sabores foram: {}".format(seusSabores))
-
-
+    '''
+ 
 def cardAcai(tam):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
-    complementos = list()
-    complementos.append('Castanha')
-    complementos.append('Amendoim')
-    complementos.append('Banana')
-    complementos.append('Achocolatado')
+    complementos =('Catanha','Amendoim','Banana','Achocolatado','Leite em pó')
     print("Nossos complementos são: {}".format(complementos))
+
     seusComplementos = []
     print("Você tem direito a {} complemento(s)".format(tam))
     while len(seusComplementos) < tam:
-
-        print("Escolha seu {}º complemento.".format(len(seusComplementos) + 1))
+ 
+        print("Escolha seu {}º complemento.:(escreva) ".format(len(seusComplementos) + 1))
         nomeDoComp = input()
         seusComplementos.append(nomeDoComp)
+        
     print("Seus complementos foram: {}".format(seusComplementos))
 
-
-def fimPedido():  # nessa função quando for encerrar vai fazer o calculo dos itens pedidos
-    print("fim")  # só para ter alguma coisa
-
+''' 
+def nota(tam):
+    print(nomeCliente)
+    print('O preço a ser pago é R${:.2f}.'.format(preco))
+    cpfnota=input('Deseja CPF na nota? S/N').upper
+    if cpfnota == 'S':
+      print('arroz')
+      #função do cpf
+    elif cpfnota == 'N':
+      valorpago = float(input('Digite o valor pago: '))
+      if valorpago == preco:
+            print('PEDIDO ENCERRADO')
+      elif valorpago != preco:
+        if valorpago > preco:
+              troco = valorpago-preco
+              print(troco)
+        else:
+              falta = preco-valorpago
+              print(falta)
+'''
 
 def validarCPF(cpf):
     if cpf.count(cpf[1]) == 11:
@@ -133,14 +161,21 @@ PARAMOS NESSA FUNÇAO
 print('BEM VINDO À SORVEETERIA PY \n')
 nomeCliente=input("Digite seu nome para começarmos: ")
 pedido = 1
+carrinho = []
 while pedido != 0:
     pedido = escolhaCardapio()
     if pedido == 1: # Sorvete 
-        preco = tamanhosPreco()
-        cardSorvete(preco)
+        tamanho = tamanhosPreco()
+        if tamanho == 0:
+            pass
+        else: 
+            cardSorvete(tamanho)
     elif pedido == 2: # Açai
-        preco = tamanhosPreco()
-        cardAcai(preco)
+        tamanho = tamanhosPreco()
+        if tamanho == 0:
+            pass
+        else: 
+            cardAcai(tamanho)
     elif pedido == 0:
         #Chamar função nota
         None
