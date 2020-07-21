@@ -23,45 +23,38 @@ def escolhaCardapio():
 
 
 #                   FUNÇAO QUE ESCOLHE O TAMANHO DO SORVETE/ACAI (CHAMA FUNCAO MENU SORVETE/ACAI)
-def tamanhosPreco(opt):
+def tamanhosPreco():
     os.system('cls')
     print('DIGITE O NÚMERO CORRESPONDENTE: ')
-    print('1 - PEQUENO = 200ml = 4,00 R$ ')
-    print('2 - MEDIO = 400ml = 7,00 R$')
-    print('3 - GRANDE = 600ml = 10,00 R$')
+    print('1 - PEQUENO 200ml: 4,00 R$ ')
+    print('2 - MEDIO 400ml: 7,00 R$')
+    print('3 - GRANDE 600ml: 10,00 R$')
     print('0 - VOLTAR')
     condicao = 1
-    global preco
-    preco = 0
-    while condicao != -1:
+    preco = 0.0
+    while condicao != 0:
         tam = int(input('Escolha o tamanho: '))
-        if tam == 1 or tam == 2 or tam == 3 or tam == 0:
-            if tam == 1:
-                preco = 4
-                condicao = -1
-            elif tam == 2:
-                preco = 7
-                condicao = -1
-            elif tam == 3:
-                preco = 10
-                condicao = -1
-            elif tam == 0:
-               return 3
+        if tam == 1:
+            preco = 4
+            return preco
+        elif tam == 2:
+            preco = 7
+            return preco
+        elif tam == 3:
+            preco = 10
+            return preco
+        elif tam == 0:
+            return 0
         else:
             print('Opção inválida.')
-    if opt == 1:
-        cardSorvete(tam)
-    else:
-        cardAcai(tam)
+
 
 
 def cardSorvete(tam):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
-    sabores = list()
-    sabores.append('Chocolate')
-    sabores.append('Baunilha')
-    sabores.append('Flocos')
-    sabores.append('Morango')
-    print("Nossos sabores são: {}".format(sabores))
+    sabor = ('Chocolate', 'Baunilha', 'Flocos', 'Morango')
+    print("Nossos sabores são: ")
+    for i in range(len(sabor)):
+        print(f'{i + 1} - {sabor[i]}')
     seusSabores = []
     while len(seusSabores) < tam:
         print("Escolha seu {}º sabor.".format(len(seusSabores) + 1))
@@ -142,10 +135,12 @@ nomeCliente=input("Digite seu nome para começarmos: ")
 pedido = 1
 while pedido != 0:
     pedido = escolhaCardapio()
-    if pedido == 1:
-        tamanhosPreco(pedido)
-    elif pedido == 2:
-        tamanhosPreco(pedido)
+    if pedido == 1: # Sorvete 
+        preco = tamanhosPreco()
+        cardSorvete(preco)
+    elif pedido == 2: # Açai
+        preco = tamanhosPreco()
+        cardAcai(preco)
     elif pedido == 0:
         #Chamar função nota
         None
