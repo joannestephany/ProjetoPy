@@ -7,7 +7,7 @@ def escolhaCardapio():
     while flag != 0:
         os.system('cls')
         print("ESCOLHA SEU CARDÁPIO\n")
-        print("> 1 Abrir o caradápio de Sorvete")
+        print("> 1 Abrir o cardápio de Sorvete")
         print("> 2 Abrir o cardápio de Açai")
         print("> 0 Cancelar e encerra a aplicação.")
         card = input("Escolha: ")
@@ -27,9 +27,9 @@ def escolhaCardapio():
 def tamanhosPreco():
     os.system('cls')
     print('DIGITE O NÚMERO CORRESPONDENTE: ')
-    print('1 - Pequeno 200ml: R$ 4.00  ')
-    print('2 - Medio 400ml: R$ 7.00')
-    print('3 - Grande 600ml: R$ 10.00')
+    print('1 - Pequeno (1 Sabor) 200ml: R$ 4.00')
+    print('2 - Médio (2 Sabores) 400ml: R$ 7.00')
+    print('3 - Grande (3 Sabores) 600ml: R$ 10.00')
     print('0 - VOLTAR')
     condicao = 1
     while condicao != 0:
@@ -39,6 +39,7 @@ def tamanhosPreco():
         else:
             condicao = 0
     return tam
+    
             
 def cardapio(tam, pedido):  # Após escolher o sabor o pedido do usuário vai par o "carrinho com o sabor e o preço"
     if pedido == '1':
@@ -65,10 +66,10 @@ def cardapio(tam, pedido):  # Após escolher o sabor o pedido do usuário vai pa
                 print('Opção inválida')
             else:
                 pedidoCliente.append(sabor[int(opcao) - 1])
+                print(pedidoCliente)
                 pedidoCliente.append(tipo1)
                 pedidoCliente.append('Pequeno')
                 pedidoCliente.append(4.0)
-                print(pedidoCliente)
                 flag = 0
         elif tam == '2':
             i = 0
@@ -81,7 +82,7 @@ def cardapio(tam, pedido):  # Após escolher o sabor o pedido do usuário vai pa
                     print(pedidoCliente)
                     i += 1
             pedidoCliente.append(tipo1)
-            pedidoCliente.append('Medio')
+            pedidoCliente.append('Médio')
             pedidoCliente.append(7.0)
             flag = 0
         else:
@@ -98,42 +99,65 @@ def cardapio(tam, pedido):  # Após escolher o sabor o pedido do usuário vai pa
             pedidoCliente.append('Grande')
             pedidoCliente.append(10.0) 
             flag = 0
-        sleep(1.5)        
+        sleep(1)        
     return pedidoCliente
    
 
-def nota(carrinho, pTotal):
-    print(nomeCliente)
-    print('O preço a ser pago é R$ {:.2f}.'.format(pTotal))
-    cpfnota = input('Deseja CPF na nota? S/N').upper()
-    if cpfnota == 'S':
-        flag = False
-        while flag != True:
-            cpf = input(f'Digite o cpf : ')
-            flag = validarCPF(cpf)
-        valorpago = float(input('Digite o valor pago: '))
-        if valorpago == pTotal:
-            print('PEDIDO ENCERRADO')
-        elif valorpago != pTotal:
-            if valorpago > pTotal:
-                troco = valorpago-pTotal
-                print('Troco: {}'.format(troco))
+def cobrar(pTotal):
+    limparTela()
+    #print('=' * 50)
+    print('Pagamento')
+    print('O total a ser pago é R$ {:.2f}.'.format(pTotal))
+    flag = 1
+    while flag != 0:
+        valorPago = float(input('Insira o valor em dinheiro: '))
+        if valorPago == pTotal:
+            print('Compra paga.')
+            flag = 0
+        elif valorPago != pTotal:
+            if valorPago > pTotal:
+                limparTela()
+                troco = valorPago-pTotal
+                print('Compra paga, devolvendo troco.')
+                print('Troco: R$ {:.2f}'.format(troco))
+                input('Pressione qualquer tecla para confirmar.')
+                flag = 0
+            else:
+                print('Você digitou um valor menor que o valor da compra que é R${}.'.format(pTotal))
+                print('Por favor, tente novamente.')
+
+def nota(lista, pTotal):
+    limparTela()
+    #print('O preço a ser pago é R$ {:.2f}.'.format(pTotal))
+    y = 1
+    while y != 0:
+        cpfnota = input('Deseja CPF na nota? (s/n): ').upper()
+        cpf = ''
+        if cpfnota == 'S':
+            flag = False
+            while flag != True:
+                cpf = input(f'Digite o cpf: ')
+                flag = validarCPF(cpf)
+            print ('=' * 25)
+            print(f'Cliente: {nomeCliente}')
+            print(f'CPF: {cpf}')
+            print('Seu pedido:')
+            for i in lista:
+                print(f'{i[-3]} {i[-2]}: R$ {i[-1]:.2f}')
+            print(f'Total: {pTotal:.2f}')
+            print('=' * 25)
+            y = 0
+        elif cpfnota == 'N':
+            print ('=' * 25)
+            print(f'Cliente: {nomeCliente}')
+            print('Seu pedido:')
+            for i in lista:
+                print(f'{i[-3]} {i[-2]}: R$ {i[-1]}')
+            print(f'Total: {pTotal}')
+            print('=' * 25)
+            y = 0
         else:
-            falta = pTotal-valorpago
-            print(falta)
-    elif cpfnota == 'N':
-        valorpago = float(input('Digite o valor pago: '))
-        if valorpago == pTotal:
-            print('PEDIDO ENCERRADO')
-        elif valorpago != pTotal:
-            if valorpago > pTotal:
-                troco = valorpago-pTotal
-                print('Troco: {}'.format(troco))
-        else:
-            falta = pTotal-valorpago
-            print(falta)
-    else:
-        print('Opcao invalida')
+            print('Opcao inválida')
 
 
 def validarCPF(cpf):
@@ -147,7 +171,6 @@ def validarCPF(cpf):
         for i in range(2, 11):
             soma1 += (int(cpf[i - 2]) * cont)
             cont -= 1
-
         resto = (soma1 * 10) % 11
         if resto != 10 and resto != int(cpf[-2]):
             print('CPF inválido, confira os dados.')
@@ -157,13 +180,13 @@ def validarCPF(cpf):
             for x in range(2, 12):
                 soma2 += (int(cpf[x - 2]) * cont)
                 cont -= 1
-
             resto = (soma2 * 10) % 11
             if resto != int(cpf[-1]):
                 print('CPF inválido, confira os dados.')
             else:
                 print('CPF Válido!')
                 return True
+
 
 def somarItens(lista):
     somaItens = 0
@@ -176,9 +199,7 @@ def limparTela():
     os.system('cls')
 
 
-def mostrarCarrinho(lista, card):
-    limparTela()
-    pTotal = somarItens(lista)
+def mostrarCarrinho(lista):
     cont = 0
     for pedido in lista:
         cont += 1
@@ -198,14 +219,15 @@ def mostrarCarrinho(lista, card):
             print(item, end=' ')
         print()
         print('=' * 25)
-    return pTotal
 
-def removerItem(lista, tipo):
-    mostrarCarrinho(lista, tipo)
+
+def removerItem(lista):
+    limparTela()
+    mostrarCarrinho(lista)
     flag = 1
     while flag != 0:
         print()
-        item = input('Digite o número do item correspondente que deseja remover (0 - Cancelar): ')
+        item = input('Digite o número do pedido que deseja remover (0 - Cancelar): ')
         if item > str(len(lista)) or item < '0':
             print('Item não faz parte da lista.')
         elif item == '0':
@@ -213,18 +235,19 @@ def removerItem(lista, tipo):
         else:
             lista.pop(int(item) - 1)
             flag = 0
-    return lista
+    return lista[:]
 
 
-def menufinalizarOperacao():
+def menufinalizarOperacao(lista):
+    limparTela()
+    mostrarCarrinho(lista)
     print('\n1 - Adicionar novo pedido ao carrinho.')
     print('2 - Remover um pedido do carrinho.')
     print('3 - Finalizar a operação')
     resp = input('Digite a opção: ')
     return resp
-'''
-PARAMOS NESSA FUNÇAO
-'''
+
+
 # FUNÇÃO PRINCIPAL
 limparTela()
 print('BEM VINDO À SORVETERIA PY \n')
@@ -244,22 +267,23 @@ while flag != 0:
         #TERCEIRO MENU - ESCOLHER SABOR
         else: 
             carrinho.append(cardapio(tamanho, pedido))
-            precoTotal = mostrarCarrinho(carrinho, pedido)
+            precoTotal = somarItens(carrinho)
             print()
             print(f'Subtotal: R$ {precoTotal:.2f}')
             laco = 1
             while laco != 0:
-                resp = menufinalizarOperacao()
+                resp = menufinalizarOperacao(carrinho)
                 if resp > '3' or resp < '1':
                     print('Opção inválida')
                 elif  resp == '1':
                     laco = 0
                     pass
                 elif resp == '2':
-                   carrinho = removerItem(carrinho, pedido)
+                    carrinho = removerItem(carrinho)
                 else:
                     print('Seu carrinho:') 
-                    mostrarCarrinho(carrinho, pedido)
+                    #mostrarCarrinho(carrinho, pedido)
+                    cobrar(precoTotal)
                     nota(carrinho, precoTotal)
                     laco = 0
                     flag = 0
@@ -272,35 +296,26 @@ while flag != 0:
         #TERCEIRO MENU - ESCOLHER SABOR
         else:
             carrinho.append(cardapio(tamanho, pedido))
-            precoTotal = mostrarCarrinho(carrinho, pedido)
+            precoTotal = somarItens(carrinho)
             print()
             print(f'Subtotal: R$ {precoTotal:.2f}')
-            x = 1
-            while x != 0:
-                resp = input('Deseja adicionar outro pedido ao carrinho? (s/n)')
-                if  resp.upper() == 'S':
-                    x = 0
+            laco = 1
+            while laco != 0:
+                resp = menufinalizarOperacao(carrinho)
+                if resp > '3' or resp < '1':
+                    print('Opção inválida')
+                elif  resp == '1':
+                    laco = 0
                     pass
-                elif resp.upper() == 'N': 
+                elif resp == '2':
+                    carrinho = removerItem(carrinho)
+                else: 
+                    #mostrarCarrinho(carrinho, pedido)
+                    cobrar(precoTotal)
                     nota(carrinho, precoTotal)
-                    x = 0
+                    laco = 0
                     flag = 0
-                else:
-                    print('')
-            
             sleep(1)
     else:
-            #Chamar função nota
         flag = 0
-#print(nomeCliente)
-'''
-print(preco) vai mostrar o valor que a pessoa ter que pagar
-print(seusComplementos) vai mostrar os complementos  escolhidos
-print(seusSabores) vai mostrar os sabores escolihods
-!!!falta colocar condição caso a pessoa digite um sabor que não tenha (usando string).requisito
-!!!falta repetir o programa caso a pessoa queira pedir outro produto e acumular na variavel preco
-!!!falta usar valores boleanos(true/false).requisito
-!!!condicao aninhada/encadeada.requisito
-'''
-# card = escolhaCardapio()
 
