@@ -66,7 +66,8 @@ def cardapio(tam, card):  # Após escolher o sabor o pedido do usuário vai par 
             else:
                 pedidoCliente.append(sabor[opcao - 1])
                 pedidoCliente.append(tipo1)
-                pedidoCliente.append('Pequeno: 4,00R$')
+                pedidoCliente.append('Pequeno')
+                pedidoCliente.append(4.0)
                 print(pedidoCliente)
                 flag = 0
         elif tam == 2:
@@ -80,7 +81,8 @@ def cardapio(tam, card):  # Após escolher o sabor o pedido do usuário vai par 
                     print(pedidoCliente)
                     i += 1
             pedidoCliente.append(tipo1)
-            pedidoCliente.append('Medio: 7,00R$')
+            pedidoCliente.append('Medio')
+            pedidoCliente.append(7.0)
             flag = 0
         else:
             i = 0
@@ -93,31 +95,46 @@ def cardapio(tam, card):  # Após escolher o sabor o pedido do usuário vai par 
                     print(pedidoCliente)
                     i += 1
             pedidoCliente.append(tipo1)
-            pedidoCliente.append('Grande: 10,00R$') 
+            pedidoCliente.append('Grande')
+            pedidoCliente.append(10.0) 
             flag = 0
         sleep(1.5)        
     return pedidoCliente
    
-''' 
-def nota(tam):
+
+def nota(carrinho, pTotal):
     print(nomeCliente)
-    print('O preço a ser pago é R${:.2f}.'.format(preco))
-    cpfnota=input('Deseja CPF na nota? S/N').upper
+    print('O preço a ser pago é R${:.2f}.'.format(pTotal))
+    cpfnota = input('Deseja CPF na nota? S/N').upper()
     if cpfnota == 'S':
-      print('arroz')
-      #função do cpf
-    elif cpfnota == 'N':
-      valorpago = float(input('Digite o valor pago: '))
-      if valorpago == preco:
+        flag = False
+        while flag != True:
+            cpf = input(f'Digite o cpf : ')
+            flag = validarCPF(cpf)
+        valorpago = float(input('Digite o valor pago: '))
+        if valorpago == pTotal:
             print('PEDIDO ENCERRADO')
-      elif valorpago != preco:
-        if valorpago > preco:
-              troco = valorpago-preco
-              print(troco)
+        elif valorpago != pTotal:
+            if valorpago > pTotal:
+                troco = valorpago-pTotal
+                print('Troco: {}'.format(troco))
         else:
-              falta = preco-valorpago
-              print(falta)
-'''
+            falta = pTotal-valorpago
+            print(falta)
+    elif cpfnota == 'N':
+        valorpago = float(input('Digite o valor pago: '))
+        if valorpago == pTotal:
+            print('PEDIDO ENCERRADO')
+        elif valorpago != pTotal:
+            if valorpago > pTotal:
+                troco = valorpago-pTotal
+                print('Troco: {}'.format(troco))
+        else:
+            falta = pTotal-valorpago
+            print(falta)
+    else:
+        print('Opcao invalida')
+
 
 def validarCPF(cpf):
     if cpf.count(cpf[1]) == 11:
@@ -148,50 +165,44 @@ def validarCPF(cpf):
                 print('CPF Válido!')
                 return True
 
-
-def menuCPF():
-    flag = False
-    while flag != True:
-        opt = input(f'Digite o cpf ou Apenas 0 para cancelar: ')
-        if int(opt) != 0:
-            flag = validarCPF(opt)
-        else:
-            print('Operação cancelada.')
-            flag = True
-
-
 def limparTela():
     os.system('cls')
 
 
-def mostrarCarrinho(lista, card):
+def mostrarCarrinho(lista, card, pTotal):
     limparTela()
     print('Seu carrinho:')
     for i in lista:
-        if i[-2].upper() == 'SORVETE':
+        if i[-3].upper() == 'SORVETE':
             tipo = 'Sabor'
             tipo1 = 'Sorvete'
         else:
             tipo = 'Acompanhamento'
             tipo1 = 'Açai'
         lista1 = i[:]
-        print(f'{tipo1} {i[-1]}')
-        del lista1[-2:]
+        pTotal += i[-1]
+        print(f'{tipo1} {i[-2]}: {i[-1]}R$')
+        del lista1[-3:]
         print(f'{tipo}: ')
         for x in lista1:
             print(x, end=' ')
         print()
+        print(f'Subtotal: {pTotal}')
     input('Pressione qualquer tecla para confirmar.')
+    return pTotal
 
 
 '''
 PARAMOS NESSA FUNÇAO
 '''
+# FUNÇÃO PRINCIPAL
 limparTela()
 print('BEM VINDO À SORVEETERIA PY \n')
+global nomeCliente
 nomeCliente=input("Digite seu nome para começarmos: ")
 flag = 1
-carrinho = []
+carrinho = [] 
+precoTotal = 0
 while flag != 0:
     pedido = escolhaCardapio()
     if pedido == 1: # Sorvete 
@@ -200,7 +211,19 @@ while flag != 0:
             pass
         else: 
             carrinho.append(cardapio(tamanho, pedido))
-            mostrarCarrinho(carrinho, pedido)
+            precoTotal = mostrarCarrinho(carrinho, pedido, precoTotal)
+            x = 1
+            while x != 0:
+                resp = input('Deseja adicionar outro pedido ao carrinho? (s/n)')
+                if  resp.upper() == 'S':
+                    x = 0
+                    pass
+                elif resp.upper() == 'N': 
+                    nota(carrinho, precoTotal)
+                    x = 0
+                    flag = 0
+                else:
+                    print('')
             sleep(1)
     elif pedido == 2: # Açai
         tamanho = tamanhosPreco()
@@ -208,12 +231,25 @@ while flag != 0:
             pass
         else:
             carrinho.append(cardapio(tamanho, pedido))
-            mostrarCarrinho(carrinho, pedido)
+            precoTotal = mostrarCarrinho(carrinho, pedido, precoTotal)
+            x = 1
+            while x != 0:
+                resp = input('Deseja adicionar outro pedido ao carrinho? (s/n)')
+                if  resp.upper() == 'S':
+                    x = 0
+                    pass
+                elif resp.upper() == 'N': 
+                    nota(carrinho, precoTotal)
+                    x = 0
+                    flag = 0
+                else:
+                    print('')
+            
             sleep(1)
     else:
             #Chamar função nota
         flag = 0
-print(nomeCliente)
+#print(nomeCliente)
 '''
 print(preco) vai mostrar o valor que a pessoa ter que pagar
 print(seusComplementos) vai mostrar os complementos  escolhidos
