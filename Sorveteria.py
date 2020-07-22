@@ -138,6 +138,7 @@ def nota(lista, pTotal):
             while flag != True:
                 cpf = input(f'Digite o cpf: ')
                 flag = validarCPF(cpf)
+            limparTela()
             print ('=' * 25)
             print(f'Cliente: {nomeCliente}')
             print(f'CPF: {cpf}')
@@ -146,15 +147,18 @@ def nota(lista, pTotal):
                 print(f'{i[-3]} {i[-2]}: R$ {i[-1]:.2f}')
             print(f'Total: {pTotal:.2f}')
             print('=' * 25)
+            print('Obrigado por visitar a Sorveteria PY! :)')
             y = 0
         elif cpfnota == 'N':
+            limparTela()
             print ('=' * 25)
             print(f'Cliente: {nomeCliente}')
             print('Seu pedido:')
             for i in lista:
-                print(f'{i[-3]} {i[-2]}: R$ {i[-1]}')
-            print(f'Total: {pTotal}')
+                print(f'{i[-3]} {i[-2]}: R$ {i[-1]:.2f}')
+            print(f'Total: {pTotal:.2f}')
             print('=' * 25)
+            print('Obrigado por visitar a Sorveteria PY! :)')
             y = 0
         else:
             print('Opcao inválida')
@@ -200,6 +204,7 @@ def limparTela():
 
 
 def mostrarCarrinho(lista):
+    print('Seu carrinho:')
     cont = 0
     for pedido in lista:
         cont += 1
@@ -281,10 +286,9 @@ while flag != 0:
                 elif resp == '2':
                     carrinho = removerItem(carrinho)
                 else:
-                    print('Seu carrinho:') 
-                    #mostrarCarrinho(carrinho, pedido)
                     cobrar(precoTotal)
                     nota(carrinho, precoTotal)
+                    print('Pedido Finalizado.')
                     laco = 0
                     flag = 0
             sleep(1)
@@ -309,10 +313,10 @@ while flag != 0:
                     pass
                 elif resp == '2':
                     carrinho = removerItem(carrinho)
-                else: 
-                    #mostrarCarrinho(carrinho, pedido)
+                else:
                     cobrar(precoTotal)
                     nota(carrinho, precoTotal)
+                    print('Pedido Finalizado.')
                     laco = 0
                     flag = 0
             sleep(1)
