@@ -27,9 +27,9 @@ def escolhaCardapio():
 def tamanhosPreco():
     os.system('cls')
     print('DIGITE O NÚMERO CORRESPONDENTE: ')
-    print('1 - Pequeno 200ml: 4,00 R$ ')
-    print('2 - Medio 400ml: 7,00 R$')
-    print('3 - Grande 600ml: 10,00 R$')
+    print('1 - Pequeno 200ml: R$ 4.00  ')
+    print('2 - Medio 400ml: R$ 7.00')
+    print('3 - Grande 600ml: R$ 10.00')
     print('0 - VOLTAR')
     condicao = 1
     while condicao != 0:
@@ -104,7 +104,7 @@ def cardapio(tam, card):  # Após escolher o sabor o pedido do usuário vai par 
 
 def nota(carrinho, pTotal):
     print(nomeCliente)
-    print('O preço a ser pago é R${:.2f}.'.format(pTotal))
+    print('O preço a ser pago é R$ {:.2f}.'.format(pTotal))
     cpfnota = input('Deseja CPF na nota? S/N').upper()
     if cpfnota == 'S':
         flag = False
@@ -165,73 +165,89 @@ def validarCPF(cpf):
                 print('CPF Válido!')
                 return True
 
+def somarItens(lista):
+    somaItens = 0
+    for i in lista:
+        somaItens += i[-1]
+    return somaItens
+
+
 def limparTela():
     os.system('cls')
 
 
-def mostrarCarrinho(lista, card, pTotal):
+def mostrarCarrinho(lista, card):
     limparTela()
-    print('Seu carrinho:')
-    for i in lista:
-        if i[-3].upper() == 'SORVETE':
-            tipo = 'Sabor'
+    pTotal = somarItens(lista)
+    for pedido in lista:
+        print('=' * 25)
+        if pedido[-3].upper() == 'SORVETE':
+            tipo = 'Sabor(es)'
             tipo1 = 'Sorvete'
         else:
             tipo = 'Acompanhamento'
             tipo1 = 'Açai'
-        lista1 = i[:]
-        pTotal += i[-1]
-        print(f'{tipo1} {i[-2]}: {i[-1]}R$')
-        del lista1[-3:]
+        listaSabores = pedido[:] #Clone da lista pedido para lista Sabores
+        print(f'{tipo1} {pedido[-2]}: R$ {pedido[-1]:.2f}')
+        del listaSabores[-3:] #Apagando os 3 ultimos itens da lista Sabores (Tipo, Tamanho, Preço)
         print(f'{tipo}: ')
-        for x in lista1:
-            print(x, end=' ')
+        for item in listaSabores:
+            print(item, end=' ')
         print()
-        print(f'Subtotal: {pTotal}')
-    input('Pressione qualquer tecla para confirmar.')
+        print('=' * 25)
     return pTotal
-
 
 '''
 PARAMOS NESSA FUNÇAO
 '''
 # FUNÇÃO PRINCIPAL
 limparTela()
-print('BEM VINDO À SORVEETERIA PY \n')
+print('BEM VINDO À SORVETERIA PY \n')
 global nomeCliente
-nomeCliente=input("Digite seu nome para começarmos: ")
+nomeCliente=input('Digite seu nome para começarmos: ')
 flag = 1
 carrinho = [] 
 precoTotal = 0
+#PRIMEIRO MENU
 while flag != 0:
     pedido = escolhaCardapio()
+    #SEGUNDO MENU OPCAO 1 - SORVETE
     if pedido == 1: # Sorvete 
         tamanho = tamanhosPreco()
         if tamanho == 0:
             pass
+        #TERCEIRO MENU - ESCOLHER SABOR
         else: 
             carrinho.append(cardapio(tamanho, pedido))
-            precoTotal = mostrarCarrinho(carrinho, pedido, precoTotal)
+            precoTotal = mostrarCarrinho(carrinho, pedido)
+            print()
+            print(f'Subtotal: R$ {precoTotal:.2f}')
             x = 1
             while x != 0:
+                print()
                 resp = input('Deseja adicionar outro pedido ao carrinho? (s/n)')
                 if  resp.upper() == 'S':
                     x = 0
                     pass
-                elif resp.upper() == 'N': 
+                elif resp.upper() == 'N':
+                    print('Seu carrinho:') 
                     nota(carrinho, precoTotal)
                     x = 0
                     flag = 0
                 else:
                     print('')
             sleep(1)
+    #SEGUNDO MENU OPCAO 2 - AÇAI
     elif pedido == 2: # Açai
         tamanho = tamanhosPreco()
         if tamanho == 0:
             pass
+        #TERCEIRO MENU - ESCOLHER SABOR
         else:
             carrinho.append(cardapio(tamanho, pedido))
-            precoTotal = mostrarCarrinho(carrinho, pedido, precoTotal)
+            precoTotal = mostrarCarrinho(carrinho, pedido)
+            print()
+            print(f'Subtotal: R$ {precoTotal:.2f}')
             x = 1
             while x != 0:
                 resp = input('Deseja adicionar outro pedido ao carrinho? (s/n)')
