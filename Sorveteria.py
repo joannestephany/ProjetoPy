@@ -274,14 +274,15 @@ def mostrarCarrinho(lista):
 
 
 def removerItem(lista):
-    limparTela()
-    mostrarCarrinho(lista)
     flag = 1
     while flag != 0:
+        limparTela()
+        mostrarCarrinho(lista)
         print()
         item = input('Digite o número do pedido que deseja remover (0 - Cancelar): ')
         if item > str(len(lista)) or item < '0':
             print('Item não faz parte da lista.')
+            sleep(0.5)
         elif item == '0':
             flag = 0
         else:
