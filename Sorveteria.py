@@ -339,17 +339,20 @@ while flag != 0:
                     sleep(0.5)
                 elif  resp == '1':
                     laco = 0
-                    pass
                 elif resp == '2': 
                     carrinho = removerItem(carrinho)
                     precoTotal = somarItens(carrinho)
                 else:
-                    #mostrarCarrinho(carrinho)
-                    troco = cobrar(precoTotal, carrinho)
-                    nota(carrinho, precoTotal, troco)
-                    print('Pedido Finalizado.')
-                    laco = 0
-                    flag = 0
+                    if len(carrinho) == 0:
+                        print('Carrinho sem itens, operação finalizada.')
+                        laco = 0
+                        flag = 0
+                    else:
+                        troco = cobrar(precoTotal, carrinho)
+                        nota(carrinho, precoTotal, troco)
+                        print('Pedido Finalizado.')
+                        laco = 0
+                        flag = 0
             sleep(1)
     #SEGUNDO MENU OPCAO 2 - AÇAI
     elif pedido == '2': # Açai
