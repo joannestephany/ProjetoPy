@@ -139,7 +139,7 @@ def cobrar(pTotal, lista):
             else:
                 letra = True
                 break
-        if letra:
+        if letra or valorPago == '':
             print('Por favor, digite apenas números.')
             sleep(1)
         else:
@@ -164,17 +164,24 @@ def cobrar(pTotal, lista):
 
 
 def nota(lista, pTotal, troco):
-    limparTela()
     y = 1
     while y != 0:
+        limparTela()
         cpfnota = input('Deseja CPF na nota? (s/n): ').upper()
         cpf = ''
-        if cpfnota == 'S':
+        if cpfnota == '':
+            print('Opção inválida')
+            sleep(1)
+        elif cpfnota == 'S':
             flag = False
             while flag != True:
                 limparTela()
                 cpf = input(f'Digite o cpf(Somente números): ')
-                flag = validarCPF(cpf)
+                if cpf == '':
+                    print('Opção inválida')
+                    sleep(1)
+                else:
+                    flag = validarCPF(cpf)
             limparTela()
             print ('=' * 25)
             print('****** Nota Fiscal ******')
@@ -204,11 +211,26 @@ def nota(lista, pTotal, troco):
             print('Obrigado por visitar a Sorveteria PY! :)')
             y = 0
         else:
-            print('Opcao inválida')
+            print('Opção inválida')
+            sleep(1)
 
 
 def validarCPF(cpf):
-    if cpf.count(cpf[0]) == 11:
+
+    letra = False
+    for i in cpf:
+            if i.isalpha():
+                letra = True
+                break
+            elif i.isnumeric():
+                break
+            else:
+                letra = True
+                break
+    if letra:
+            print('Por favor, digite apenas números.')
+            sleep(1)
+    elif cpf.count(cpf[0]) == 11:
         print('CPF inválido, confira os dados.')
         sleep(1)
     elif len(cpf) != 11:
@@ -223,6 +245,7 @@ def validarCPF(cpf):
         resto = (soma1 * 10) % 11
         if resto != 10 and resto != int(cpf[-2]):
             print('CPF inválido, confira os dados.')
+            sleep(1)
         else:
             soma2 = 0
             cont = 11
@@ -232,8 +255,8 @@ def validarCPF(cpf):
             resto = (soma2 * 10) % 11
             if resto != int(cpf[-1]):
                 print('CPF inválido, confira os dados.')
+                sleep(1)
             else:
-                print('CPF Válido!')
                 return True
 
 
