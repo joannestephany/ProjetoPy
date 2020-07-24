@@ -2,7 +2,6 @@ import os
 from time import sleep
 #                 FUNÇÃO PARA ESCOLHER O CARDAPIO - TAMBÉM PRIMEIRA TELA
 def escolhaCardapio():
-    #global card
     flag = 1
     while flag != 0:
         limparTela()
